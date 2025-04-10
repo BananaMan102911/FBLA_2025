@@ -34,23 +34,24 @@
   <script>
 	var supabase = supabase.createClient("https://hjouszzadwmjqttfpdrg.supabase.co", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imhqb3VzenphZHdtanF0dGZwZHJnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDM3OTI0MjYsImV4cCI6MjA1OTM2ODQyNn0.HMtDm3vOkturVq89yfF6KAWlwrDqXSxF_QgXcY_6xR0");
 	async function loadListings(){
-		const { data, error } = await supabase
+		var { data, error } = await supabase
   		.from('jobListings')
   		.select('jobData');
-	  
-	  }
-	  data.forEach(item => {
-		  var jobTitle = item.jobData.jobTitle
-		  var descr = item.jobData.descr
-		  var payRange = item.jobData.payRange
-		  var fullOrPart = item.jobData.fullOrPart
-		  var employer = item.jobData.employer
-		  var jobLocation = item.jobData.jobLocation
-		  var requirements = item.jobData.requirements
-		  $("#jobsContainer").append("<div><h2>"+jobTitle+" - "+employer+"</h2><h3>"+jobLocation+"</h3><p>"+descr+"</p><h3>"+fullOrPart+" - "+payRange+"</h3><h3>"+jobLocation+"</h3></div>"
 		
+		data.forEach(item => {
+		      var html = `
+		        <div class="job-listing">
+		          <h2>${job.jobTitle} - ${job.employer}</h2>
+		          <h3>${job.jobLocation}</h3>
+		          <p>${job.descr}</p>
+		          <h4>${job.fullOrPart} | ${job.payRange}</h4>
+		          <p><strong>Requirements:</strong> ${job.requirements}</p>
+		        </div>
+		      `;
+      			$("#jobsContainer").append(html);
+		
+	  	}
 	  }
-	}
 	loadListings()
 	
   </script>
