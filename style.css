@@ -405,11 +405,14 @@ input{
 }        
 .job-listing{
     width:98%;
-    background-color:#000000;
+    background-color:#141414;
     margin:1%;
     padding:1%;
+    color:#FFFFFF
 }
 #jobsContainer{
     background-color:#009639;
 }
+
+
 
