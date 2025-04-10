@@ -31,14 +31,25 @@
         </nav> 
   <h1>Approved Job Postings</h1>
   <div id="jobsContainer"></div>
-  <script>
-	var supabase = supabase.createClient("https://hjouszzadwmjqttfpdrg.supabase.co", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imhqb3VzenphZHdtanF0dGZwZHJnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDM3OTI0MjYsImV4cCI6MjA1OTM2ODQyNn0.HMtDm3vOkturVq89yfF6KAWlwrDqXSxF_QgXcY_6xR0");
-	async function loadListings(){
-		var { data, error } = await supabase
-  		.from('jobListings')
-  		.select('jobData');
+	  <script>
+		  var supabase = supabase.createClient(
+		    "https://hjouszzadwmjqttfpdrg.supabase.co",
+		    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imhqb3VzenphZHdtanF0dGZwZHJnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDM3OTI0MjYsImV4cCI6MjA1OTM2ODQyNn0.HMtDm3vOkturVq89yfF6KAWlwrDqXSxF_QgXcY_6xR0"
+		  );
 		
-		data.forEach(item => {
+		  async function loadListings() {
+		    var { data, error } = await supabase
+		      .from('jobListings')
+		      .select('jobData');
+		
+		    if (error) {
+		      console.error("Error loading listings:", error.message);
+		      $("#jobsContainer").append("<p>Failed to load job listings.</p>");
+		      return;
+		    }
+		
+		    data.forEach(item => {
+		      var job = item.jobData;
 		      var html = `
 		        <div class="job-listing">
 		          <h2>${job.jobTitle} - ${job.employer}</h2>
@@ -48,12 +59,11 @@
 		          <p><strong>Requirements:</strong> ${job.requirements}</p>
 		        </div>
 		      `;
-      			$("#jobsContainer").append(html);
+		      $("#jobsContainer").append(html);
+		    });
+		  }
 		
-	  	}
-	  }
-	loadListings()
-	
-  </script>
+		  loadListings();
+	</script>
 </body>
 </html>
