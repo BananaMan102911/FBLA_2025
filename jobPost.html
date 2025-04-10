@@ -1,7 +1,56 @@
-{
-  "title": "Junior Web Developer",
-  "company": "TechCorp",
-  "description": "Build websites and tools.",
-  "location": "Remote",
-  "salary": "$20/hr"
-}
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Submit Listings</title>
+    <link rel="stylesheet" type="text/css" href="./stylesheet.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  </head>
+  <body>
+    <!-- This is all of the form data from here -->
+    <form class="fullForm" id="fullForm">
+      <label for="jobTitle">Job Title:</label><br>
+      <input type="text" id="jobTitle"><br>
+      <label for="employer">Employer:</label><br>
+      <input type="text" id="employer"><br>
+      <label for="fullOrPart">Full or Part-time:</label><br>
+      <input type="text" id="fullOrPart"><br>
+      <label for="descr">Job Description:</label><br>
+      <textarea type="text" id="descr" class="wide"></textarea><br>
+      <label for="payRange">Pay Range:</label><br>
+      <input type="text" id="payRange"><br>
+      <label for="jobLocation">Job Location:</label><br>
+      <input type="text" id="jobLocation"><br>
+      <label for="jobRequirements">Job Requirements:</label><br>
+      <textarea type="text" id="requirements" class="wide"></textarea><br>
+    </form>
+    <div id="empty"></div>
+    <button type="button" onclick="submitJob(event)">Submit</button> <!-- Pass the event to the function -->
+
+    <script>
+      // Activates Supabase
+      var supabase = supabase.createClient("https://hjouszzadwmjqttfpdrg.supabase.co", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imhqb3VzenphZHdtanF0dGZwZHJnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDM3OTI0MjYsImV4cCI6MjA1OTM2ODQyNn0.HMtDm3vOkturVq89yfF6KAWlwrDqXSxF_QgXcY_6xR0");
+
+      async function submitJob(event) {
+        event.preventDefault()
+        // makes the JSON item
+        var fields = ["jobTitle", "descr", "payRange", "fullOrPart", "employer", "jobLocation", "requirements"];
+        var jobData = Object.fromEntries(fields.map(id => [id, $(`#${id}`).val()]));
+
+        // Inserts JSON object into Supabase
+        var { data, error } = await supabase
+          .from('jobListings')
+          .insert([
+            { jobData: jobData }
+          ]);
+
+        if (error) {
+          alert("Failed to post job: " + error.message);
+        } else {
+          alert("Job posted successfully!");
+        }
+      }
+    </script>
+  </body>
+</html>
