@@ -44,6 +44,8 @@
       <input type="text" id="jobLocation"><br>
       <label for="jobRequirements">Job Requirements:</label><br>
       <textarea type="text" id="requirements" class="wide"></textarea><br>
+      <label for="howToApply">How to Apply:</label><br>
+      <textarea type="text" id="application" class="wide"></textarea><br>
     </form>
     <div id="empty"></div>
     <button type="button" onclick="submitJob(event)">Submit</button> <!-- Pass the event to the function -->
@@ -56,12 +58,12 @@
       async function submitJob(event) {
         event.preventDefault()
         // makes the JSON item
-        var fields = ["jobTitle", "descr", "payRange", "fullOrPart", "employer", "jobLocation", "requirements"];
+        var fields = ["jobTitle", "descr", "payRange", "fullOrPart", "employer", "jobLocation", "requirements","application"];
         var jobData = Object.fromEntries(fields.map(id => [id, $(`#${id}`).val()]));
 
         // Inserts JSON object into Supabase
         var { data, error } = await supabase
-          .from('jobListings')
+          .from('pendingJobListings')
           .insert([
             { jobData: jobData }
           ]);
