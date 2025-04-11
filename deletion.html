@@ -1,1 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Job approval</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+	    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+</head>
+<body style="background-color:#009639;">
+	<nav class="navbar">
+            <div class="navbar__container">
+                <a href="index.html" id="navbar__logo">HOME</a>
+                <div class="navbar__toggle" id="mobile-menu">
+                    <span class="bar"></span> <span class="bar"></span>
+                    <span class="bar"></span>
+                </div>
+                <ul class="navbar__menu">
+                    <li class="navbar__item">
+                        <a href="admin.html" class="navbar__links">Approve Posts</a>
+                    </li>
+                    <li class="navbar__item">
+                        <a href="Deletion.html" class="navbar__links">Delete Posts</a>
+                    </li>
+                </ul>
+            </div>
+        </nav> 
+  <h1 style="background-color:#009639;">Pending Job Postings</h1>
+  <div id="jobsContainer"></div>
+	  <script>
+		  var supabase = supabase.createClient(
+		    "https://hjouszzadwmjqttfpdrg.supabase.co",
+		    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imhqb3VzenphZHdtanF0dGZwZHJnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDM3OTI0MjYsImV4cCI6MjA1OTM2ODQyNn0.HMtDm3vOkturVq89yfF6KAWlwrDqXSxF_QgXcY_6xR0"
+		  );
+		
+		  async function loadListings() {
+			  var { data, error } = await supabase
+			    .from('jobListings')
+			    .select('id, jobData')
+			    .eq('status', 'pending');
+			
+			  if (error) {
+			    console.error("Error loading listings:", error.message);
+			    $("#jobsContainer").append("<p>Failed to load job listings.</p>");
+			    return;
+			  }
+			
+			  data.forEach(item => {
+			    var job = item.jobData;
+			    var html = `
+			      <div class="job-listing">
+			        <h2>${job.jobTitle} - ${job.employer}</h2>
+			        <h3><strong>Location:</strong> ${job.jobLocation}</h3>
+			        <p><strong>Description:</strong> ${job.descr}</p>
+			        <h4>${job.fullOrPart} | ${job.payRange}</h4>
+			        <p><strong>Requirements:</strong> ${job.requirements}</p>
+			        <button onclick="deleteJob(${item.id})">delete</button>
+			      </div>
+			    `;
+			    $("#jobsContainer").append(html);
+			  });
+			}
 
+		  async function deleteJob(id) {
+			  const { error } = await supabase
+			    .from('jobListings')
+			    .delete()
+			    .eq('id', id);
+			
+			  if (error) {
+			    alert("Failed to delete job: " + error.message);
+			  } else {
+			    alert("Job deleted!");
+			    location.reload();
+			  }
+			}
+
+		
+		  loadListings();
+	</script>
+	<script src="app.js"></script>
+</body>
+</html>
