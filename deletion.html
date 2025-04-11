@@ -21,7 +21,7 @@
                         <a href="admin.html" class="navbar__links">Approve Posts</a>
                     </li>
                     <li class="navbar__item">
-                        <a href="Deletion.html" class="navbar__links">Delete Posts</a>
+                        <a href="deletion.html" class="navbar__links">Delete Posts</a>
                     </li>
                 </ul>
             </div>
@@ -38,7 +38,6 @@
 			  var { data, error } = await supabase
 			    .from('jobListings')
 			    .select('id, jobData')
-			    .eq('status', 'pending');
 			
 			  if (error) {
 			    console.error("Error loading listings:", error.message);
