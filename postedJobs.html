@@ -32,39 +32,42 @@
   <h1 style="background-color:#009639;">Approved Job Postings</h1>
   <div id="jobsContainer"></div>
 	  <script>
-		  var supabase = supabase.createClient(
-		    "https://hjouszzadwmjqttfpdrg.supabase.co",
-		    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imhqb3VzenphZHdtanF0dGZwZHJnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDM3OTI0MjYsImV4cCI6MjA1OTM2ODQyNn0.HMtDm3vOkturVq89yfF6KAWlwrDqXSxF_QgXcY_6xR0"
-		  );
-		
-		  async function loadListings() {
-		    var { data, error } = await supabase
-		      .from('approvedJobListings')
-		      .select('jobData');
-		
-		    if (error) {
-		      console.error("Error loading listings:", error.message);
-		      $("#jobsContainer").append("<p>Failed to load job listings.</p>");
-		      return;
-		    }
-		
-		    data.forEach(item => {
-		      var job = item.jobData;
-		      var html = `
-		        <div class="job-listing">
-		          <h2>${job.jobTitle} - ${job.employer}</h2>
-		          <h3><strong>Location:</strong>${job.jobLocation}</h3>
-		          <p><strong>Description:</strong>${job.descr}</p>
-		          <h4>${job.fullOrPart} | ${job.payRange}</h4>
-		          <p><strong>Requirements:</strong> ${job.requirements}</p>
-		        </div>
-		      `;
-		      $("#jobsContainer").append(html);
-		    });
-		  }
-		
-		  loadListings();
-	</script>
+			  var supabase = supabase.createClient(
+			    "https://hjouszzadwmjqttfpdrg.supabase.co",
+			    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imhqb3VzenphZHdtanF0dGZwZHJnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDM3OTI0MjYsImV4cCI6MjA1OTM2ODQyNn0.HMtDm3vOkturVq89yfF6KAWlwrDqXSxF_QgXcY_6xR0"
+			  );
+
+			  async function loadListings() {
+			    // grabs only approved listings
+			    var { data, error } = await supabase
+			      .from('jobListings')    
+			      .select('jobData')          
+			      .eq('status', 'approved');  
+			
+			    if (error) {
+			      console.error("Error loading listings:", error.message);
+			      $("#jobsContainer").append("<p>Failed to load job listings.</p>");
+			      return;
+			    }
+			
+			    data.forEach(item => {
+			      var job = item.jobData;
+			      var html = `
+			        <div class="job-listing">
+			          <h2>${job.jobTitle} - ${job.employer}</h2>
+			          <h3><strong>Location:</strong> ${job.jobLocation}</h3>
+			          <p><strong>Description:</strong> ${job.descr}</p>
+			          <h4>${job.fullOrPart} | ${job.payRange}</h4>
+			          <p><strong>Requirements:</strong> ${job.requirements}</p>
+			        </div>
+			      `;
+			      $("#jobsContainer").append(html);
+			    });
+			  }
+			
+			  loadListings();
+			</script>
+
 	<script src="app.js"></script>
 </body>
 </html>
