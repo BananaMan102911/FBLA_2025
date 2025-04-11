@@ -39,7 +39,7 @@
 		
 		  async function loadListings() {
 		    var { data, error } = await supabase
-		      .from('jobListings')
+		      .from('approvedJobListings')
 		      .select('jobData');
 		
 		    if (error) {
