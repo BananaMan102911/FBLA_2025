@@ -379,7 +379,8 @@
 }
 /* Form CSS */
 .fullForm{
-    width:100%
+    width:100%;
+    padding:7%;
     
 }
 .alert{
@@ -413,6 +414,11 @@ input{
 #jobsContainer{
     background-color:#009639;
 }
+.wide{
+    width:50%;
+    height:40px;
+}
+
 
 
 
