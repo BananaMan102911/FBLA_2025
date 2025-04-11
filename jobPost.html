@@ -63,7 +63,7 @@
 
         // Inserts JSON object into Supabase
         var { data, error } = await supabase
-          .from('pendingJobListings')
+          .from('jobListings')
           .insert([
             { jobData: jobData }
           ]);
