@@ -40,7 +40,7 @@
 		  async function loadListings() {
 			  var { data, error } = await supabase
 			    .from('jobListings')
-			    .select('jobData')
+			    .select('id, jobData')
 			    .eq('status', 'pending');
 			
 			  if (error) {
@@ -58,12 +58,13 @@
 			        <p><strong>Description:</strong> ${job.descr}</p>
 			        <h4>${job.fullOrPart} | ${job.payRange}</h4>
 			        <p><strong>Requirements:</strong> ${job.requirements}</p>
-			        <button onclick="approveJob('${item.id}')">Approve</button>
+			        <button onclick="approveJob(${item.id})">Approve</button>
 			      </div>
 			    `;
 			    $("#jobsContainer").append(html);
 			  });
 			}
+
 		  async function approveJob(id) {
 			  const { error } = await supabase
 			    .from('jobListings')
