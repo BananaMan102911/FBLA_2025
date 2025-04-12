@@ -28,7 +28,7 @@
                 </ul>
             </div>
         </nav> 
-    <!-- This is all of the form data from here -->
+    <div class="formBack"><!-- This is all of the form data from here -->
     <form class="fullForm" id="fullForm">
       <label for="jobTitle">Job Title:</label><br>
       <input type="text" id="jobTitle"><br>
@@ -48,7 +48,8 @@
       <textarea type="text" id="application" class="wide"></textarea><br>
     </form>
     <div id="empty"></div>
-    <button type="button" onclick="submitJob(event)">Submit</button> <!-- Pass the event to the function -->
+    <button type="button" onclick="submitJob(event)" class="niceButton">Submit</button> <!-- Pass the event to the function -->
+      </div>
 
     <script>
       // Activates Supabase
