@@ -54,7 +54,7 @@
 			        <p><strong>Description:</strong> ${job.descr}</p>
 			        <h4>${job.fullOrPart} | ${job.payRange}</h4>
 			        <p><strong>Requirements:</strong> ${job.requirements}</p>
-			        <button onclick="deleteJob(${item.id})">delete</button>
+			        <button class="niceButton" onclick="deleteJob(${item.id})">delete</button>
 			      </div>
 			    `;
 			    $("#jobsContainer").append(html);
