@@ -9,6 +9,7 @@
 	    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 </head>
 <body style="background-color:#009639;">
+<!-- 	Navbar section -->
 	<nav class="navbar">
             <div class="navbar__container">
                 <a href="index.html" id="navbar__logo">HOME</a>
@@ -31,7 +32,8 @@
         </nav> 
   <h1 style="background-color:#009639;">Avalible Jobs</h1>
   <div id="jobsContainer"></div>
-	  <script>
+<!-- 	Loading job listings   -->
+	<script>
 			  var supabase = supabase.createClient(
 			    "https://hjouszzadwmjqttfpdrg.supabase.co",
 			    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imhqb3VzenphZHdtanF0dGZwZHJnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDM3OTI0MjYsImV4cCI6MjA1OTM2ODQyNn0.HMtDm3vOkturVq89yfF6KAWlwrDqXSxF_QgXcY_6xR0"
@@ -49,7 +51,7 @@
 			      $("#jobsContainer").append("<p>Failed to load job listings.</p>");
 			      return;
 			    }
-			
+			// Generates each post
 			    data.forEach(item => {
 			      var job = item.jobData;
 			      var html = `
